@@ -1,0 +1,46 @@
+{% import "plugins/blueprints/blocks/macros/attr.html" as attr %} 
+
+{% if block.properties %}
+    {% set defaultProperties = arrays(flextype.registry.get("plugins.select2.settings.blocks.Select2.properties")).toArray() %}
+    {% set blockProperties = arrays(block.properties).toArray() %}
+    {% set properties = arrays(defaultProperties).replace(blockProperties, true).toArray() %}
+{% else %}
+    {% set properties = flextype.registry.get("plugins.select2.settings.blocks.Select2.properties") %}
+{% endif %}
+
+{% if properties.label %}
+    <label for="{{ properties.id }}" 
+        {{ include(template_from_string(attr.class(['form-label', properties.label.class]))) }}
+        {{ include(template_from_string(attr.style(properties.label.style))) }}>{{ include(template_from_string(properties.label.title)) }}</label>
+{% endif %} 
+
+<select {{ include(template_from_string(attr.id(properties.id))) }}
+        {{ include(template_from_string(attr.name(properties.name))) }}
+        {{ include(template_from_string(attr.class(['form-control', 'js-select2', properties.class]))) }}
+        {{ include(template_from_string(attr.data(properties.data))) }}
+        {{ include(template_from_string(attr.style(properties.style))) }} 
+        {{ include(template_from_string(attr.events(properties.events, ['onkeyup', 'onmousedown', 'onmousemove', 'onmouseout',
+                                            'onmouseover', 'onmouseup', 'onkeypress', 'onclick', 'ondblclick',
+                                            'onkeydown', 'onblur']))) }}>
+
+    {% if properties.items is iterable %}
+        {% set items = properties.items %}
+    {% else %}
+        {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+    {% endif %}
+
+    {% for key, value in items %}
+        <option value="{{ key }}" {% if key == attr.value(properties.name, values, properties.value) %} selected="selected" {% endif %}>{{ include(template_from_string(value)) }}</option>
+    {% endfor %}
+</select>
+{% if properties.help %}
+    <small>{{ include(template_from_string(properties.help)) }}</small>
+{% endif %}
+
+<input type="hidden" 
+        {{ attr.name(properties.name, '__select2_') }} 
+        value="{{ properties.name }}">
+<input type="hidden" 
+        {{ attr.name(properties.name, '__select2_options_') }}
+        value='{{ flextype.serializers.json.encode(properties.options) }}'>
+

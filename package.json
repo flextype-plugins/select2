@@ -1,0 +1,33 @@
+{
+  "name": "Select2",
+  "version": "1.0.0",
+  "description": "Highly customizable select box plugin for Flextype.",
+  "homepage": "https://flextype.org",
+  "author": "Sergey Romanenko",
+  "license": "MIT",
+  "keywords": [
+    "flextype",
+    "cms",
+    "flat cms",
+    "flatfile cms",
+    "plugin",
+    "select2"
+  ],
+  "bugs": {
+    "url": "https://github.com/flextype-plugins/select2/issues"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^5.0.0",
+    "gulp-gzip": "^1.4.2",
+    "gulp-size": "^3.0.0",
+    "gulp-rename": "^2.0.0",
+    "postcss-import": "^12.0.0",
+    "select2": "^4.0.13"
+  }
+}
