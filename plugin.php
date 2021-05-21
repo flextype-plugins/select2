@@ -22,10 +22,10 @@ flextype('registry')->set('plugins.blueprints.settings.blocks.Select2',
  */                         
 if (flextype('registry')->get('flextype.settings.locale') == 'en_US') {
     $locale = 'en';
-    flextype('registry')->set('plugins.select2.settings.blocks.InputSelect2.properties.options.lang', $locale);
+    flextype('registry')->set('plugins.select2.settings.blocks.Select2.properties.options.lang', $locale);
 } else {
     $locale = strings(flextype('registry')->get('flextype.settings.locale'))->lower()->substr(0, 2)->toString();
-    flextype('registry')->set('plugins.select2.settings.blocks.InputSelect2.properties.options.lang', $locale);
+    flextype('registry')->set('plugins.select2.settings.blocks.Select2.properties.options.lang', $locale);
 }
 
 /**
