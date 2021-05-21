@@ -1,9 +1,7 @@
 {% import "plugins/blueprints/blocks/macros/attr.html" as attr %} 
 
 {% if block.properties %}
-    {% set defaultProperties = arrays(flextype.registry.get("plugins.select2.settings.blocks.Select2.properties")).toArray() %}
-    {% set blockProperties = arrays(block.properties).toArray() %}
-    {% set properties = arrays(defaultProperties).replace(blockProperties, true).toArray() %}
+    {% set properties = arrays(flextype.registry.get("plugins.select2.settings.blocks.Select2.properties")).replace(block.properties, true).toArray() %}
 {% else %}
     {% set properties = flextype.registry.get("plugins.select2.settings.blocks.Select2.properties") %}
 {% endif %}
@@ -23,10 +21,12 @@
                                             'onmouseover', 'onmouseup', 'onkeypress', 'onclick', 'ondblclick',
                                             'onkeydown', 'onblur']))) }}>
 
-    {% if properties.items is iterable %}
-        {% set items = properties.items %}
-    {% else %}
-        {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+    {% if properties.items %}
+        {% if properties.items is iterable %}
+            {% set items = properties.items %}
+        {% else %}
+            {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+        {% endif %}
     {% endif %}
 
     {% for key, value in items %}
