@@ -45,7 +45,7 @@ sass.compiler      = require('node-sass');
     return gulp
         .src([
             // Select2
-            'node_modules/select2/dist/js/select2.min.js',
+            'node_modules/select2/dist/js/select2.full.min.js',
 
             // Blocks
             'blocks/Select2/block.js'
