@@ -12,7 +12,6 @@ assetsLoadOnSite: false
 blocks:
   Select2:
     properties:
-      id: select2
       name: select2
       
       # Select2 options
