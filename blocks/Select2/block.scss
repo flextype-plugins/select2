@@ -1,5 +1,4 @@
 @import "../../../blueprints/node_modules/bootstrap/scss/functions";
-@import "../../../blueprints/node_modules/bootstrap/scss/variables";
 @import "../../../blueprints/assets/src/scss/variables.scss";
 @import "../../../blueprints/node_modules/bootstrap/scss/mixins";
 @import "../../../blueprints/node_modules/bootstrap/scss/utilities";
@@ -27,7 +26,6 @@ input[type="search"]::-webkit-search-decoration {
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .select2-container--default .select2-results__option[aria-selected=true] {
     background-color: $gray-400;
-    color: $primary;
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
@@ -46,7 +44,6 @@ input[type="search"]::-webkit-search-decoration {
 .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
     border-color: transparent transparent $primary;
 }
-
 
 .select2-container--classic .select2-selection--single .select2-selection__arrow b,
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
@@ -69,6 +66,5 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: $primary;
     line-height: 34px;
 }
