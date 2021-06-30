@@ -20,7 +20,7 @@ The following dependencies need to be downloaded and installed for Select2 Plugi
 
 1. Download & Install all required dependencies.
 2. Create new folder `/project/plugins/select2`
-3. Download Trumbowyg Plugin and unzip plugin content to the folder `/project/plugins/select2`
+3. Download Select2 Plugin and unzip plugin content to the folder `/project/plugins/select2`
 
 ## Documentation
 
@@ -40,8 +40,8 @@ assetsLoadOnSite: false
 # Blocks
 blocks:
   Select2:
+    type: Select2
     properties:
-      id: select2
       name: select2
       
       # Select2 options
