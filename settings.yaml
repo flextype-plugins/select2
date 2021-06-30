@@ -11,6 +11,7 @@ assetsLoadOnSite: false
 # Blocks
 blocks:
   Select2:
+    type: Select2
     properties:
       name: select2
       
