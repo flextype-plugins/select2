@@ -1,47 +1,57 @@
 {% import "plugins/blueprints/blocks/macros/attr.html" as attr %} 
 
+
 {% if block.properties %}
     {% set properties = arrays(flextype.registry.get("plugins.select2.settings.blocks.Select2.properties")).replace(block.properties, true).toArray() %}
 {% else %}
     {% set properties = flextype.registry.get("plugins.select2.settings.blocks.Select2.properties") %}
 {% endif %}
 
-{% if properties.label %}
-    <label for="{{ properties.id }}" 
-        {{ include(template_from_string(attr.class(['form-label', properties.label.class]))) }}
-        {{ include(template_from_string(attr.style(properties.label.style))) }}>{{ include(template_from_string(properties.label.value)) }}</label>
-{% endif %} 
+{% set blockVisible = true %}
+{% if arrays(block).has('properties.visible') %}
+    {% if block.properties.visible is string %}
+        {% set blockVisible = include(template_from_string(block.properties.visible)) %}
+    {% else %}
+        {% set blockVisible = (block.properties.visible == true) ? true : false %}
+    {% endif %}
+{% endif %}
+{% if blockVisible %}
+    {% if properties.label %}
+        <label for="{{ properties.id }}" 
+            {{ include(template_from_string(attr.class(['form-label', properties.label.class]))) }}
+            {{ include(template_from_string(attr.style(properties.label.style))) }}>{{ include(template_from_string(properties.label.value)) }}</label>
+    {% endif %} 
 
-<select {{ include(template_from_string(attr.id(properties.id))) }}
-        {{ include(template_from_string(attr.name(properties.name))) }}
-        {{ include(template_from_string(attr.class(['form-control', 'js-select2', properties.class]))) }}
-        {{ include(template_from_string(attr.data(properties.data))) }}
-        {{ include(template_from_string(attr.style(properties.style))) }} 
-        {{ include(template_from_string(attr.events(properties.events, ['onkeyup', 'onmousedown', 'onmousemove', 'onmouseout',
-                                            'onmouseover', 'onmouseup', 'onkeypress', 'onclick', 'ondblclick',
-                                            'onkeydown', 'onblur']))) }}>
+    <select {{ include(template_from_string(attr.id(properties.id))) }}
+            {{ include(template_from_string(attr.name(properties.name))) }}
+            {{ include(template_from_string(attr.class(['form-control', 'js-select2', properties.class]))) }}
+            {{ include(template_from_string(attr.data(properties.data))) }}
+            {{ include(template_from_string(attr.style(properties.style))) }} 
+            {{ include(template_from_string(attr.events(properties.events, ['onkeyup', 'onmousedown', 'onmousemove', 'onmouseout',
+                                                'onmouseover', 'onmouseup', 'onkeypress', 'onclick', 'ondblclick',
+                                                'onkeydown', 'onblur']))) }}>
 
-    {% if properties.items %}
-        {% if properties.items is iterable %}
-            {% set items = properties.items %}
-        {% else %}
-            {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+        {% if properties.items %}
+            {% if properties.items is iterable %}
+                {% set items = properties.items %}
+            {% else %}
+                {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+            {% endif %}
         {% endif %}
+
+        {% for key, value in items %}
+            <option value="{{ key }}" 
+                    {{ attr.selected(key, properties.name, values, properties.value) }}>{{ include(template_from_string(value)) }}</option>
+        {% endfor %}
+    </select>
+    {% if properties.help %}
+        <small>{{ include(template_from_string(properties.help)) }}</small>
     {% endif %}
 
-    {% for key, value in items %}
-        <option value="{{ key }}" 
-                {{ attr.selected(key, properties.name, values, properties.value) }}>{{ include(template_from_string(value)) }}</option>
-    {% endfor %}
-</select>
-{% if properties.help %}
-    <small>{{ include(template_from_string(properties.help)) }}</small>
+    <input type="hidden" 
+            {{ attr.name(properties.name, '__select2_') }} 
+            value="{{ properties.name }}">
+    <input type="hidden" 
+            {{ attr.name(properties.name, '__select2_options_') }}
+            value='{{ flextype.serializers.json.encode(properties.options) }}'>
 {% endif %}
-
-<input type="hidden" 
-        {{ attr.name(properties.name, '__select2_') }} 
-        value="{{ properties.name }}">
-<input type="hidden" 
-        {{ attr.name(properties.name, '__select2_options_') }}
-        value='{{ flextype.serializers.json.encode(properties.options) }}'>
-
