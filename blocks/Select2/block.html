@@ -2,9 +2,9 @@
 
 
 {% if block.properties %}
-    {% set properties = arrays(flextype.registry.get("plugins.select2.settings.blocks.Select2.properties")).replace(block.properties, true).toArray() %}
+    {% set properties = arrays(registry().get("plugins.select2.settings.blocks.Select2.properties")).replace(block.properties, true).toArray() %}
 {% else %}
-    {% set properties = flextype.registry.get("plugins.select2.settings.blocks.Select2.properties") %}
+    {% set properties = registry().get("plugins.select2.settings.blocks.Select2.properties") %}
 {% endif %}
 
 {% set blockVisible = true %}
@@ -35,7 +35,7 @@
             {% if properties.items is iterable %}
                 {% set items = properties.items %}
             {% else %}
-                {% set items = flextype.serializers.json.decode(raw(include(template_from_string(properties.items)))) %}
+                {% set items = serializers().json.decode(raw(include(template_from_string(properties.items)))) %}
             {% endif %}
         {% endif %}
 
@@ -53,5 +53,5 @@
             value="{{ properties.name }}">
     <input type="hidden" 
             {{ attr.name(properties.name, '__select2_options_') }}
-            value='{{ flextype.serializers.json.encode(properties.options) }}'>
+            value='{{ serializers().json.encode(properties.options) }}'>
 {% endif %}
